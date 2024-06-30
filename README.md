@@ -66,7 +66,7 @@ Khảo Sát Dữ Liệu:
 
 Huấn Luyện Mô Hình:
 + Mô hình RandomForestRegressor và ExtraTreesRegressor được huấn luyện trên tập dữ liệu huấn luyện.
-+Dự đoán trên tập kiểm thử và tính điểm số r2_score để đánh giá hiệu quả của mô hình.
++ Dự đoán trên tập kiểm thử và tính điểm số r2_score để đánh giá hiệu quả của mô hình.
 
 Xử Lý Dữ Liệu Kiểm Thử:
 + Dữ liệu kiểm thử từ tệp 'test.csv' được tải và xử lý tương tự như tập huấn luyện (thay thế giá trị thiếu và loại bỏ cột 'username').
