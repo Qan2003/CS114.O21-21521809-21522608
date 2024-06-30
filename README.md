@@ -45,10 +45,11 @@ One-hot encoding: Nhãn của mỗi ảnh được biến đổi thành dạng o
 ### Thuật toán và mô hình học
 Mô hình học sâu: Sử dụng một mạng nơ-ron tích chập đơn giản (CNN) với cấu trúc bao gồm:
 
-  Lớp tích chập (Conv2D): Sử dụng 32 bộ lọc với kích thước 3x3, hàm kích hoạt ReLU, và khởi tạo trọng số He uniform, phù hợp cho mạng ReLU để giảm vấn đề biến mất gradient.  
-  Lớp gộp tối đa (MaxPooling2D): Giảm chiều dữ liệu đầu ra từ lớp tích chập, giúp mô hình bớt nhạy cảm với vị trí của đặc trưng trong ảnh.  
-  Lớp làm phẳng (Flatten) và các lớp kết nối đầy đủ (Dense): Chuyển đổi đầu ra từ dạng ma trận sang vector và áp dụng học có giám sát để phân loại ảnh.  
-  Biên dịch mô hình: Sử dụng thuật toán tối ưu hóa Stochastic Gradient Descent (SGD) với hệ số học là 0.01 và động lượng 0.9, cùng với hàm mất mát là categorical_crossentropy, phù hợp cho bài toán phân loại nhiều lớp.  
+ + Lớp tích chập (Conv2D): Sử dụng 32 bộ lọc với kích thước 3x3, hàm kích hoạt ReLU, và khởi tạo trọng số He uniform, phù hợp cho mạng ReLU để giảm vấn đề biến mất gradient.  
+ + Lớp gộp tối đa (MaxPooling2D): Giảm chiều dữ liệu đầu ra từ lớp tích chập, giúp mô hình bớt nhạy cảm với vị trí của đặc trưng trong ảnh.  
+ + Lớp làm phẳng (Flatten) và các lớp kết nối đầy đủ (Dense): Chuyển đổi đầu ra từ dạng ma trận sang vector và áp dụng học có giám sát để phân loại ảnh.
+   
+Biên dịch mô hình: Sử dụng thuật toán tối ưu hóa Stochastic Gradient Descent (SGD) với hệ số học là 0.01 và động lượng 0.9, cùng với hàm mất mát là categorical_crossentropy, phù hợp cho bài toán phân loại nhiều lớp.  
 
 Đánh giá mô hình: Sử dụng kỹ thuật kiểm định chéo k-fold để đánh giá độ chính xác của mô hình, đảm bảo mô hình hoạt động tốt trên nhiều tập dữ liệu kiểm thử khác nhau và không bị quá khớp.  
 
