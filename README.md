@@ -37,7 +37,7 @@ Cuối cùng là thực hiện đánh giá trên tập validation và test để
 ## 4. Bài tập - Nhận dạng chữ số viết tay
 Dữ liệu được thu thập bằng cách tự viết tay các số từ 1 đến 9 mỗi số có 3 ảnh khác nhau và được lưu vào các folder số tương ứng.  
 ### Đặc trưng của dữ liệu
-Định dạng dữ liệu ảnh: Các ảnh trong MNIST là các ảnh chữ số viết tay từ 0 đến 9, có kích thước 28x28 pixels. Các ảnh này ban đầu là đơn sắc và được định dạng lại để có một kênh màu (greyscale).  
+Định dạng dữ liệu ảnh: Các ảnh chữ số viết tay từ 0 đến 9, có kích thước 28x28 pixels. Các ảnh này ban đầu là đơn sắc và được định dạng lại để có một kênh màu (greyscale).  
 
 Chuẩn hóa dữ liệu: Dữ liệu ảnh được chuẩn hóa bằng cách chuyển đổi giá trị pixel từ kiểu số nguyên sang số thực và chia cho 255 để đưa giá trị về phạm vi từ 0 đến 1. Việc này giúp cải thiện hiệu quả huấn luyện của mạng nơ-ron bằng cách làm giảm sự chênh lệch độ lớn giữa các đặc trưng đầu vào.  
 
