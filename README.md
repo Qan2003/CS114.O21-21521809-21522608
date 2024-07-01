@@ -4,7 +4,7 @@
 Họ và Tên: Nguyễn Quốc An  
 Số buổi vắng: 1  
 Số bài tập quá trình: 9  
-Điểm WeCode:  
+Điểm WeCode: 2675 
 
 ### MSSV-21522608
 Họ và Tên:  
