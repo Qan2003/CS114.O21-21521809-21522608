@@ -14,20 +14,20 @@
 
 ## THÔNG TIN ĐỒ ÁN - THỰC HÀNH
 ## 1. Đồ án cuối kỳ: MotocycleClassification
-Tổng số lượng ảnh đóng góp: 229 = 54(Honda/) + 60(Yamaha) + 45(Suzuki) + 45(Vinfast) + 25(Other)
-Phương pháp rút trích đặc trưng sử dụng:  Sử dụng ResNet50
-Thuật toán học được sử dụng:  FCNN
-Framework, thư viện sử dụng:  
-Kết quả Accuracy:  
-Xếp hạng:  
++ Tổng số lượng ảnh đóng góp: 229 = 54(Honda/) + 60(Yamaha) + 45(Suzuki) + 45(Vinfast) + 25(Other)
++ Phương pháp rút trích đặc trưng sử dụng:  Sử dụng ResNet50
++ Thuật toán học được sử dụng:  FCNN
++ Framework, thư viện sử dụng:  
++ Kết quả Accuracy:  
++ Xếp hạng:  
 
-## 2. Danh sách các bài thực hành đã làm - điền thời điểm (ngày, giờ) nộp bài trên Classroom:
-Thống kê dữ liệu (CS114.Tool.DatasetStat.ipynb):  6 June
-Tạo các splits (CS114.Tool.CreateSplit.ipynb):  8 June
-Hiển thị các ảnh (CS114.Tool.DatasetViz.ipynb):  8 June
-Ứng dụng Clustering (CS114.Clustering.ipynb):  10 June
-Huấn luyện Model (CS114.Train.ipynb): 13 June
-Đánh giá Model (CS114.Evaluation.ipynb):  13 June
+## 2. Danh sách các bài thực hành đã làm:
++ Thống kê dữ liệu (CS114.Tool.DatasetStat.ipynb):  6 June
++ Tạo các splits (CS114.Tool.CreateSplit.ipynb):  8 June
++ Hiển thị các ảnh (CS114.Tool.DatasetViz.ipynb):  8 June
++ Ứng dụng Clustering (CS114.Clustering.ipynb):  10 June
++ Huấn luyện Model (CS114.Train.ipynb): 13 June
++ Đánh giá Model (CS114.Evaluation.ipynb):  13 June
 
 ## 3. Bài tập - Dự đoán điểm IT001
 ### Quá trình xử lý dữ liệu
