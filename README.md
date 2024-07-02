@@ -8,7 +8,7 @@ Số bài tập quá trình: 9
 
 ### MSSV-21522608
 Họ và Tên: Lê Phương Thảo
-Số buổi vắng: 1 (Vì bị trùng lịch học bù)
+Số buổi vắng: 1
 Số bài tập quá trình: 9
 Điểm WeCode:  1735
 
