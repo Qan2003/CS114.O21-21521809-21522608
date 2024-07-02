@@ -1,19 +1,19 @@
 # CS114.O21.KHCL-21521809-21522608
 ## THÔNG TIN NHÓM
 ### MSSV-21521809
-Họ và Tên: Nguyễn Quốc An  
-Số buổi vắng: 1  
-Số bài tập quá trình: 9  
-Điểm WeCode: 2675 
++ Họ và Tên: Nguyễn Quốc An  
++ Số buổi vắng: 1  
++ Số bài tập quá trình: 9  
++ Điểm WeCode: 2675 
 
 ### MSSV-21522608
-Họ và Tên: Lê Phương Thảo
-Số buổi vắng: 1
-Số bài tập quá trình: 9
-Điểm WeCode:  1735
++ Họ và Tên: Lê Phương Thảo
++ Số buổi vắng: 1
++ Số bài tập quá trình: 9
++ Điểm WeCode:  1735
 
 ## THÔNG TIN ĐỒ ÁN - THỰC HÀNH
-### 1. Đồ án cuối kỳ: MotocycleClassification
+## 1. Đồ án cuối kỳ: MotocycleClassification
 Tổng số lượng ảnh đóng góp: 229 = 54(Honda/) + 60(Yamaha) + 45(Suzuki) + 45(Vinfast) + 25(Other)
 Phương pháp rút trích đặc trưng sử dụng:  Sử dụng ResNet50
 Thuật toán học được sử dụng:  FCNN
