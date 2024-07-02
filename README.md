@@ -34,16 +34,25 @@ Các yêu cầu khi lựa chọn các hình ảnh: mỗi loại xe nên nhiều 
 ### Trích xuất đặc trưng:
 Sử dụng mô hình ResNet50 (Loại bỏ lớp phân loại của mô hình này, và thay bằng loại chọn của nhóm)
 ### Xử lý đặc trưng:
-Vì số lượng mẫu trên mỗi class không cân bằng (ví dụ: số lượng mẫu trên label 1 nhiều hơn một nữa label 4). Do đó, để cân bằng dữ liệu, sử dụng kỹ thuật SMOTE của imbalance để over-sample
+- Vì số lượng mẫu trên mỗi class không cân bằng (ví dụ: số lượng mẫu trên label 1 nhiều hơn một nữa label 4). Do đó, để cân bằng số lượng dữ liệu ở mỗi class, chúng ta có thể sử dụng một số kỹ thuật xử lý như: SMOTE và imbalance để over-sample hoặc để class không tăng, giảm quá nhiều thì có thể sử dụng một thông số threshold để chia ngưỡng, lấy một ngưỡng nào đó để tăng, giảm dữ liệu cân bằng.
+- Ở đây, nhóm đã thử nghiệm sử dụng cả 2 kỹ thuật SMOTE và lấy ngưỡng threshold trên split 1. Và nhận thấy cả 2 kỹ thuật đều cho ra kết quả tương đương nhau. Nên nhóm quyết định sử dụng SMOTE cho cả 5 split.
+
 ### Cấu hình mô hình:
 - Lớp phân loại/ output layer của ResNet50 là 1 lớp Dense với thuật toán activate là softmax. Vì số lượng đặc trưng rút ra là 2048 đặc trưng, là một số lượng tương đối nhiều. Do đó, để tăng cường thêm khả năng phân loại từ các đặc trưng rút ra từ các layer Convolution của ResNet, nhóm đã thêm 7 lớp Dense, với số neuron bắt đầu từ 2048. Lý do sử dụng số lượng nhiều neuron bắt đầu là vì khi thực hiện nhóm chỉ thực hiện với 1024 và 512 neuron và nhận thấy hiện tượng overfit, khi mà càng về sau loss của val càng cao hơn loss của train, và không có hiện tượng hội tụ lại của 2 hàm này.
+- Bên trong mô hình, ngoài việc sử dụng các lớp để học và phân loại. Sử dụng thêm một lớp Dropout để tránh overfit. Cụ thể, khi sử dụng lớp Dropout này, ở mỗi layer học, mô hình sẽ tạm ngưng hoạt động của 1 số neuron theo tỉ lệ đã đặt, lý do của việc này là vì sẽ giúp mô hình không phụ thuộc vào bất kỳ đặc trưng nào, giống như việc không để mô hình phụ thuộc vào đặc trưng logo xe mà nhận diện ra hãng xe.
+### Chia tập dữ liệu:
+- Lý do của việc thực hiện huấn luyện mô hình trên từng split riêng biệt thay vì huấn luyện mô hình liên tục trên các split. Vì ở mỗi split train, sẽ có 1 phần data test. Do đó, nếu thực hiện train model liên tục trên các split train sẽ dẫn đến việc model học luôn cả dữ liệu của test. 
+- Ví dụ: split train 1 có chứa dữ liệu test 5, khi thực hiện train trên split train 5 (không có data test 5) và đánh giá mô hình trên test 5. Mô hình trước đó đã học dữ liệu test 5 ở split 1, do đó có thể dẫn đến accuracy cao khi đánh giá ở split 5. Do đó, nhóm thực hiện train và đánh giá mô hình trên từng split riêng biệt.
+### Training:
 - Xử lý tránh overfiting: 
   - Sử dụng kỹ thuật early stopping để tránh tình trạng overfit có thể xảy ra. Đây là kỹ thuật được sử dụng nhiều để tránh hiện tượng overfit, nó sẽ dùng khi nhận thấy loss của tập val không còn cải thiện (giảm) được nửa. Từ kỹ thuật này, sẽ giúp mô hình ngưng cập nhật tham số mô hình, giúp mô hình giữ được tham số học tổng quát nhất.
-  - Bên trong mô hình, ngoài việc sử dụng các lớp để học và phân loại. Sử dụng thêm một lớp Dropout để tránh overfit. Cụ thể, khi sử dụng lớp Dropout này, ở mỗi layer học, mô hình sẽ tạm ngưng hoạt động của 1 số neuron theo tỉ lệ đã đặt, lý do của việc này là vì sẽ giúp mô hình không phụ thuộc vào bất kỳ đặc trưng nào, giống như việc không để mô hình phụ thuộc vào đặc trưng logo xe mà nhận diện ra hãng xe.
-### Training:
-- Lý do của việc thực hiện huấn luyện mô hình trên từng split riêng biệt thay vì huấn luyện mô hình liên tục trên các split. Vì ở mỗi split train, sẽ có 1 phần data test. Do đó, nếu thực hiện train model liên tục trên các split train sẽ dẫn đến việc model học luôn cả dữ liệu của test. 
-- Ví dụ: split train 1 có chứa dữ liệu test 5, khi thực hiện train trên split train 5 (không có data test 5) và đánh giá mô hình trên test 5. Mô hình trước đó đã học dữ liệu test 5 ở split 1, do đó có thể dẫn đến accuracy cao khi đánh giá ở split 5.
-- Do đó, nhóm thực hiện train và đánh giá mô hình trên từng split riêng biệt.
+- Sử dụng hàm kích hoạt (activate) là softmax để chuyển số kết quả đầu ra của mỗi class là xác suất dự đoán cho mỗi class đó.
+- Sử dụng một số thông số cập nhật tham số tối ưu như: Adam với learning_rate là 0.01, hàm loss sử dụng categorical_crossentropy cho bài toán phân loại, ... (Các tham số này được điều chỉnh sau quá trình train nhiều lần và đánh giá hiệu suất).
+
+### Đánh giá hiệu suất:
+- Đánh giá từng mô hình trên từng split test riêng biệt như đã nói.
+- Sử dụng biểu đồ Learning Curves trên tập train, val: để xem cách loss và accuracy của mô hình thay đổi qua các epoch. Từ đó có thể đánh giá liệu mô hình có đang học tốt hay không. Khi mô hình biểu diễn tốt trên tập huấn luyện nhưng kém trên tập validation, đường loss của train giảm trong khi đường loss của val không giảm hoặc tăng lên, đây là hiện tương overfit. Và Underfitting khi mô hình không biểu diễn tốt trên cả tập huấn luyện và tập validation, cả hai đường loss đều cao và không có dấu hiệu giảm đáng kể.
+- Sử dụng confusion matrix trên tập test: từ ma trận này, có thể đánh giá được số lượng chính xác và không chính xác mỗi class. 
 
 ## 3. Bài tập - Dự đoán điểm IT001
 ### Quá trình xử lý dữ liệu
