@@ -13,21 +13,37 @@
 + Điểm WeCode:  1735
 
 ## THÔNG TIN ĐỒ ÁN - THỰC HÀNH
-## 1. Đồ án cuối kỳ: MotocycleClassification
-+ Tổng số lượng ảnh đóng góp: 229 = 54(Honda/) + 60(Yamaha) + 45(Suzuki) + 45(Vinfast) + 25(Other)
-+ Phương pháp rút trích đặc trưng sử dụng:  Sử dụng ResNet50
-+ Thuật toán học được sử dụng:  FCNN
-+ Framework, thư viện sử dụng:  
-+ Kết quả Accuracy:  
-+ Xếp hạng:  
-
-## 2. Danh sách các bài thực hành đã làm:
+## 1. Danh sách các bài thực hành đã làm:
 + Thống kê dữ liệu (CS114.Tool.DatasetStat.ipynb):  6 June
 + Tạo các splits (CS114.Tool.CreateSplit.ipynb):  8 June
 + Hiển thị các ảnh (CS114.Tool.DatasetViz.ipynb):  8 June
 + Ứng dụng Clustering (CS114.Clustering.ipynb):  10 June
 + Huấn luyện Model (CS114.Train.ipynb): 13 June
 + Đánh giá Model (CS114.Evaluation.ipynb):  13 June
+
+## 2. Đồ án cuối kỳ: MotocycleClassification
+### Thông tin tổng quát
++ Tổng số lượng ảnh đóng góp: 229 = 54(Honda/) + 60(Yamaha) + 45(Suzuki) + 45(Vinfast) + 25(Other)
++ Phương pháp rút trích đặc trưng sử dụng:  Sử dụng ResNet50
++ Thuật toán học được sử dụng:  FCNN
++ Framework, thư viện sử dụng:  
++ Kết quả Accuracy:  
++ Xếp hạng: 
+### Qúa trình lấy ảnh:
+Các yêu cầu khi lựa chọn các hình ảnh: mỗi loại xe nên nhiều góc nhìn khác nhau như: đầu xe, đuôi xe, thân xe, hình ảnh thân xe tổng quát, hình nền trắng hoặc hình nền nhiều bối cảnh để giúp mô hình có thể học được nhiều đặt trưng hơn, từ đó giúp đảm bảo trong trường hợp thực tế mô hình vẫn có thể dự đoán được được hãng xe. Đặc biệt, nên cân bằng số lượng xe có logo và không có logo. Có logo sẽ giúp mô hình học được đặc trưng này, nhưng để đảm bảo mô hình không bị quá phụ thuộc vào đặc trưng này nên chọn cân bằng số lượng xe không có logo.
+### Trích xuất đặc trưng:
+Sử dụng mô hình ResNet50 (Loại bỏ lớp phân loại của mô hình này, và thay bằng loại chọn của nhóm)
+### Xử lý đặc trưng:
+Vì số lượng mẫu trên mỗi class không cân bằng (ví dụ: số lượng mẫu trên label 1 nhiều hơn một nữa label 4). Do đó, để cân bằng dữ liệu, sử dụng kỹ thuật SMOTE của imbalance để over-sample
+### Cấu hình mô hình:
+- Lớp phân loại/ output layer của ResNet50 là 1 lớp Dense với thuật toán activate là softmax. Vì số lượng đặc trưng rút ra là 2048 đặc trưng, là một số lượng tương đối nhiều. Do đó, để tăng cường thêm khả năng phân loại từ các đặc trưng rút ra từ các layer Convolution của ResNet, nhóm đã thêm 7 lớp Dense, với số neuron bắt đầu từ 2048. Lý do sử dụng số lượng nhiều neuron bắt đầu là vì khi thực hiện nhóm chỉ thực hiện với 1024 và 512 neuron và nhận thấy hiện tượng overfit, khi mà càng về sau loss của val càng cao hơn loss của train, và không có hiện tượng hội tụ lại của 2 hàm này.
+- Xử lý tránh overfiting: 
+  - Sử dụng kỹ thuật early stopping để tránh tình trạng overfit có thể xảy ra. Đây là kỹ thuật được sử dụng nhiều để tránh hiện tượng overfit, nó sẽ dùng khi nhận thấy loss của tập val không còn cải thiện (giảm) được nửa. Từ kỹ thuật này, sẽ giúp mô hình ngưng cập nhật tham số mô hình, giúp mô hình giữ được tham số học tổng quát nhất.
+  - Bên trong mô hình, ngoài việc sử dụng các lớp để học và phân loại. Sử dụng thêm một lớp Dropout để tránh overfit. Cụ thể, khi sử dụng lớp Dropout này, ở mỗi layer học, mô hình sẽ tạm ngưng hoạt động của 1 số neuron theo tỉ lệ đã đặt, lý do của việc này là vì sẽ giúp mô hình không phụ thuộc vào bất kỳ đặc trưng nào, giống như việc không để mô hình phụ thuộc vào đặc trưng logo xe mà nhận diện ra hãng xe.
+### Training:
+- Lý do của việc thực hiện huấn luyện mô hình trên từng split riêng biệt thay vì huấn luyện mô hình liên tục trên các split. Vì ở mỗi split train, sẽ có 1 phần data test. Do đó, nếu thực hiện train model liên tục trên các split train sẽ dẫn đến việc model học luôn cả dữ liệu của test. 
+- Ví dụ: split train 1 có chứa dữ liệu test 5, khi thực hiện train trên split train 5 (không có data test 5) và đánh giá mô hình trên test 5. Mô hình trước đó đã học dữ liệu test 5 ở split 1, do đó có thể dẫn đến accuracy cao khi đánh giá ở split 5.
+- Do đó, nhóm thực hiện train và đánh giá mô hình trên từng split riêng biệt.
 
 ## 3. Bài tập - Dự đoán điểm IT001
 ### Quá trình xử lý dữ liệu
